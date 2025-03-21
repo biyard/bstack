@@ -1,5 +1,11 @@
+use std::cell::RefCell;
+
 use bcdk::*;
 use http_gateway::*;
+
+thread_local! {
+    static STATE: RefCell<u64> = RefCell::default();
+}
 
 #[query]
 async fn http_request(req: Request) -> Response {
@@ -16,8 +22,14 @@ async fn http_request(req: Request) -> Response {
 
 #[update]
 async fn http_request_update(_req: Request) -> Response {
+    let v = STATE.with_borrow_mut(|v| {
+        *v += 1;
+        *v
+    });
+
     Response::build(serde_json::json!({
         "method": "POST",
+        "value": v
     }))
 }
 
@@ -28,8 +40,11 @@ fn version() -> serde_json::Value {
 }
 
 fn get() -> serde_json::Value {
-    serde_json::json!({
-        "method": "GET",
+    STATE.with(|v| {
+        serde_json::json!({
+            "method": "GET",
+            "value": v
+        })
     })
 }
 

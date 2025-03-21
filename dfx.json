@@ -1,18 +1,9 @@
 {
   "canisters": {
-    "bstack_backend": {
-      "candid": "src/bstack_backend/bstack_backend.did",
-      "package": "bstack_backend",
+    "canister": {
+      "candid": "packages/canister/service.did",
+      "package": "canister",
       "type": "rust"
-    },
-    "bstack_frontend": {
-      "dependencies": [
-        "bstack_backend"
-      ],
-      "source": [
-        "src/bstack_frontend/assets"
-      ],
-      "type": "assets"
     }
   },
   "defaults": {

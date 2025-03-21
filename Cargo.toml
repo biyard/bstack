@@ -1,5 +1,12 @@
 [workspace]
 members = [
-    "src/bstack_backend"
-]
+    "packages/*"
+, "packages/web"]
 resolver = "2"
+
+[workspace.package]
+authors = ["Biyard"]
+version = "0.1.0"
+edition = "2024"
+repository = "https://github.com/biyard/bstack"
+license = "Apache-2.0"

@@ -10,4 +10,7 @@ type Response = record {
   upgrade : opt bool;
   status_code : nat16;
 };
-service : { http_request : (Request) -> (Response) query }
+service : {
+  http_request : (Request) -> (Response) query;
+  http_request_update : (Request) -> (Response);
+}

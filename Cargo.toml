@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "src/bstack_backend"
+]
+resolver = "2"

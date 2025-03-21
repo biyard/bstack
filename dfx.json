@@ -1,0 +1,26 @@
+{
+  "canisters": {
+    "bstack_backend": {
+      "candid": "src/bstack_backend/bstack_backend.did",
+      "package": "bstack_backend",
+      "type": "rust"
+    },
+    "bstack_frontend": {
+      "dependencies": [
+        "bstack_backend"
+      ],
+      "source": [
+        "src/bstack_frontend/assets"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}

@@ -48,21 +48,20 @@ fn get() -> serde_json::Value {
     })
 }
 
-// fn matcher(url: String, route: String) -> (bool, HashMap<String, String>) {
-//     let parts: Vec<_> = url.split("?").collect();
-//     let url = parts[0].split("/");
-//     let route = route.split("/");
-//     let mut m = HashMap::new();
+#[pre_upgrade]
+fn pre_upgrade() {
+    STATE.with(|s| {
+        storage::stable_save((s.clone(),)).expect("Failed to save stable memory");
+    });
+}
 
-//     for (u, r) in url.zip(route) {
-//         if r.starts_with(":") {
-//             m.insert(r.replace(":", ""), u.to_string());
-//         } else if u != r {
-//             return (false, m);
-//         }
-//     }
-
-//     (true, m)
-// }
+// Restore state after upgrade
+#[post_upgrade]
+fn post_upgrade() {
+    let (saved_state,): (u64,) = storage::stable_restore().unwrap_or_default();
+    STATE.with_borrow_mut(|s| {
+        *s = saved_state;
+    });
+}
 
 export_candid!();
